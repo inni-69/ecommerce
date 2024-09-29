@@ -35,17 +35,17 @@ const Slider = () => {
   const [current, setCurrent] = useState(0);
 
   useEffect(() => {
-     const interval = setInterval(() => {
-       setCurrent((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
-     }, 3000);
+    const interval = setInterval(() => {
+      setCurrent((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+    }, 3000);
 
-     return () => clearInterval(interval);
-   }, []);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <div className="h-[calc(100vh-80px)] overflow-hidden">
+    <div className="h-[calc(100vh-80px)] overflow-hidden relative">
       <div
-        className="w-max h-full flex transition-all ease-in-out duration-1000"
+        className="w-max h-full flex transition-transform ease-in-out duration-1000"
         style={{ transform: `translateX(-${current * 100}vw)` }}
       >
         {slides.map((slide) => (
@@ -54,15 +54,15 @@ const Slider = () => {
             key={slide.id}
           >
             {/* TEXT CONTAINER */}
-            <div className="h-1/2 xl:w-1/2 xl:h-full flex flex-col items-center justify-center gap-8 2xl:gap-12 text-center">
-              <h2 className="text-xl lg:text-3xl 2xl:text-5xl">
+            <div className="h-1/2 xl:w-1/2 xl:h-full flex flex-col items-center justify-center gap-6 xl:gap-8 text-center">
+              <h2 className="text-lg md:text-xl lg:text-2xl 2xl:text-4xl text-gray-600 font-light">
                 {slide.description}
               </h2>
-              <h1 className="text-5xl lg:text-6xl 2xl:text-8xl font-semibold">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl 2xl:text-7xl font-bold text-gray-800">
                 {slide.title}
               </h1>
               <Link href={slide.url}>
-                <button className="rounded-md bg-black text-white py-3 px-4 ">
+                <button className="rounded-md bg-black text-white py-3 px-6 text-base md:text-lg lg:text-xl transition-transform hover:scale-105 hover:bg-gray-800 focus:outline-none">
                   SHOP NOW
                 </button>
               </Link>
@@ -74,24 +74,22 @@ const Slider = () => {
                 alt=""
                 fill
                 sizes="100%"
-                className="object-cover"
+                className="object-cover transition-transform ease-in-out duration-700"
               />
             </div>
           </div>
         ))}
       </div>
-      <div className="absolute m-auto left-1/2 bottom-8 flex gap-4">
+      {/* Navigation Dots */}
+      <div className="absolute left-1/2 bottom-8 transform -translate-x-1/2 flex gap-6">
         {slides.map((slide, index) => (
           <div
-            className={`w-3 h-3  rounded-full ring-1 ring-gray-600 cursor-pointer flex items-center justify-center ${
-              current === index ? "scale-150" : ""
+            className={`w-4 h-4 rounded-full ring-2 ring-gray-500 cursor-pointer transition-transform transform ${
+              current === index ? "scale-125 bg-gray-800" : "bg-gray-300"
             }`}
             key={slide.id}
             onClick={() => setCurrent(index)}
           >
-            {current === index && (
-              <div className="w-[6px] h-[6px] bg-gray-600 rounded-full"></div>
-            )}
           </div>
         ))}
       </div>
